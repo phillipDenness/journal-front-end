@@ -8,4 +8,10 @@ app.get('/', function (req, res) {
     });
 })
 
+app.get('/resources', function (req, res) {
+    var json = service.getResources(function (json) {
+        res.send(json);
+    });
+})
+
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
