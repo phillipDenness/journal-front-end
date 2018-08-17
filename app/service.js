@@ -1,32 +1,22 @@
 const rest = require('./rest')
 
-exports.createLanguage = function(callback) {
+exports.createResource = function(payload, callback) {
     var options = {
-        protocol: 'http',
-        host: 'journaljack-env-1.un4wzhvicb.eu-west-2.elasticbeanstalk.com',
-        port: 80,
-        //host: 'localhost',
-        //port: '8080',
-        path: '/language',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        body: payload,
+        path: '/resources'
     };
+
+    return rest.postJson(options, function(err, body) {
+        if(!err) {
+            callback(body);
+        }
+    });
 }
 
 exports.getResources = function(callback) {
     var options = {
-        protocol: 'http',
-        host: 'journaljack-env-1.un4wzhvicb.eu-west-2.elasticbeanstalk.com',
-        port: 80,
-        //host: 'localhost',
-        //port: '8080',
-        path: '/resources',
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        body: '',
+        path: '/resources'
     };
 
     return rest.getJSON(options, function(err, body) {
