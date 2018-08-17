@@ -1,17 +1,16 @@
-const express = require('express')
-const service = require('./service')
-const app = express()
+const express = require('express');
+const resourceRoutes = require('./routes/resourceRoutes');
+const config = require('./config');
+const app = express();
 
-app.get('/', function (req, res) {    
-    var json = service.getResources(function(json) {
-        res.send(json);
-    });
-})
+app.set('port', config.app.port);
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
+app.set('view options', {layout: false});
 
-app.get('/resources', function (req, res) {
-    var json = service.getResources(function (json) {
-        res.send(json);
-    });
-})
+exports.init = function() {
+    // Routes
+    app.use('/', resourceRoutes);
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+app.listen(config.app.port, () => console.log('App listening on port ' + config.app.port + '!'))
+};
