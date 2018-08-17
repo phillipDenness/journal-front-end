@@ -1,6 +1,6 @@
 const service = require('../app/service.js');
 const express = require('express');
-
+const path = require('path');
 var router = express.Router();
 
 router.get('/', function (req, res) {    
@@ -15,7 +15,7 @@ service.getResources(function (json) {
 
 
 router.get('/resources/create', function (req, res) {    
-res.sendFile(__dirname + '/resourceform.html');
+    res.sendFile(path.join(__dirname, '../public', 'resourceform.html'));
   })
 
 router.post('/resources/create', function(req, res) {
