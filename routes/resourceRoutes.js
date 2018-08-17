@@ -1,4 +1,4 @@
-const service = require('../app/service.js');
+const service = require('../src/service.js');
 const express = require('express');
 const path = require('path');
 var router = express.Router();
