@@ -1,6 +1,6 @@
 const env = process.env.NODE_ENV; // 'dev' or 'test'
 
-   const dev = {
+   const test = {
     app: {
       port: 3000
     },
@@ -11,7 +11,7 @@ const env = process.env.NODE_ENV; // 'dev' or 'test'
     },
    };
    
-   const test = {
+   const dev = {
     app: {
       port: 3000
     },
@@ -27,4 +27,4 @@ const env = process.env.NODE_ENV; // 'dev' or 'test'
     test
    };
    
-   module.exports = config[env];
+   module.exports = config['dev'];

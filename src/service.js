@@ -1,11 +1,12 @@
 const rest = require('./rest')
+const utils = require('./utils')
 
 exports.createResource = function(payload, callback) {
-    var options = {
-        body: payload,
+    let options = {
+        body: utils.convertFormToResource(payload.body),
         path: '/resources'
     };
-
+    console.log(options);
     return rest.postJson(options, function(err, body) {
         if(!err) {
             callback(body);
