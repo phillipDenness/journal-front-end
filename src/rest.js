@@ -3,28 +3,32 @@ const config = require('../config');
 
 const headers = {'Content-Type': 'application/json'}
 
-exports.postJson = function(options, callback) {
+exports.postJson = function(options, successCallback, failureCallback) {
     request({
       headers: headers,
       uri: buildUrl(options),
       method: 'POST',
       body: options.body
     }, (err, res, body) => { 
-        if (res.statusCode == 202) {
-          callback(null, body);
+        if (err || res.statusCode != 202) {
+          return failureCallback(res.statusCode);
         }else{
-          callback(res.statusCode, null);
+          return successCallback(body);
         }
   })
 }
 
-exports.getJSON = function(options, callback) {
+exports.getJSON = function(options, successCallback, failureCallback) {
     request({
         headers: headers,
         uri: buildUrl(options),
         method: 'GET'
       }, (err, res, body) => {
-        parseJsonResponse(callback, err, body);
+        if (err || res.statusCode != 202) {
+          return failureCallback(res.statusCode);
+        }else{
+          return successCallback(body);
+        }
       })
 };
 
