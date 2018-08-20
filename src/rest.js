@@ -30,5 +30,5 @@ var parseJsonResponse = function(callback, err, body) {
 }
 
 var buildUrl = function(options) {
-  return config.api.protocol + '://' + config.api.host + ':' + config.api.port + '/' + options.path;
+  return config.api.protocol + '://' + config.api.host + ':' + config.api.port + options.path;
 }
