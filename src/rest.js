@@ -20,6 +20,11 @@ exports.getJSON = function(options, callback) {
         uri: buildUrl(options),
         method: 'GET'
       }, (err, res, body) => {
+        if(res.statusCode == 202){
+          callback(null,body);
+        }else{
+          callback(res.statusCode,null);
+        }
         parseJsonResponse(callback, err, body);
       })
 };
