@@ -9,9 +9,13 @@ exports.postJson = function(options, callback) {
       uri: buildUrl(options),
       method: 'POST',
       body: options.body
-    }, (err, res, body) => {
-      parseJsonResponse(callback, err, body);
-    });
+    }, (err, res, body) => { 
+        if (res.statusCode == 202) {
+          callback(null, body);
+        }else{
+          callback(res.statusCode, null);
+        }
+  })
 }
 
 exports.getJSON = function(options, callback) {
@@ -25,7 +29,7 @@ exports.getJSON = function(options, callback) {
 };
 
 var parseJsonResponse = function(callback, err, body) {
-  if (err) { callback(JSON.parse(err), null); }
+  if (err != null) { callback(JSON.parse(err), null); }
   callback(null, JSON.parse(body));
 }
 

@@ -6,10 +6,12 @@ exports.createResource = function(payload, callback) {
         body: utils.convertFormToResource(payload.body),
         path: '/resources'
     };
-    console.log(options);
+
     return rest.postJson(options, function(err, body) {
         if(!err) {
             callback(body);
+        }else{
+            callback(err);
         }
     });
 }
