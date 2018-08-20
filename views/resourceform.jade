@@ -1,24 +1,28 @@
-
-form(name="create-resource", method="post")
-    div.input
-        span.label Name
-        input(type="text", name="name")
-    div.input
-        span.label URL
-        input(type="text", name="url")
-    div    
-    span.label Language: 
-    select(id="languagedropdown", name="languagename")
-        option(value="null") None
-        -for (var i = 0; i < languages.length; i++) {
-        option(value="#{languages[i].name}") #{languages[i].name}
-        -}
-    div
-    span.label Framework: 
-    select(id="frameworkdropdown", name="frameworkname")
-        option(value="null") None
-        -for (var i = 0; i < frameworks.length; i++) {
-        option(value="#{frameworks[i].name}") #{frameworks[i].name}
-        -}
-    div.actions
-        input(type="submit", value="Create")
+extend layout
+block content
+    
+    form(name="create-resource", method="post")
+     .form-group
+        div.input.form-group
+            span.label Resource Name
+            input(class="form-control" type="text", name="name")
+            
+        div.input.form-group
+            span.label Link
+            input(class="form-control" type="text", name="url")
+        div.form-group    
+        span.label Language
+        select(class="form-control" id="languagedropdown", name="languagename")
+            option(value="null") None
+            -for (var i = 0; i < languages.length; i++) {
+            option(value="#{languages[i].name}") #{languages[i].name}
+            -}
+        div.form-group
+        span.label Framework
+        select(class="form-control" id="frameworkdropdown", name="frameworkname")
+            option(value="null") None
+            -for (var i = 0; i < frameworks.length; i++) {
+            option(value="#{frameworks[i].name}") #{frameworks[i].name}
+            -}
+        div.actions
+            input(class="btn btn-primary" type="submit", value="Create").form-group
