@@ -2,6 +2,6 @@ body {
     background-color: white;
 }
 
-form {
-    background-color: grey;
+.btn-primary {
+     margin-top:15px;
 }

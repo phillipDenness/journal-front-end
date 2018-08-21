@@ -1,24 +1,24 @@
 extend layout
 block content
-    
+    h1 Create a resource
     form(name="create-resource", method="post")
      .form-group
         div.input.form-group
-            span.label Resource Name
+            label Resource Name
             input(class="form-control" type="text", name="name")
             
         div.input.form-group
-            span.label Link
+            label Link
             input(class="form-control" type="text", name="url")
         div.form-group    
-        span.label Language
+        label Language
         select(class="form-control" id="languagedropdown", name="languagename")
             option(value="null") None
             -for (var i = 0; i < languages.length; i++) {
             option(value="#{languages[i].name}") #{languages[i].name}
             -}
         div.form-group
-        span.label Framework
+        label Framework
         select(class="form-control" id="frameworkdropdown", name="frameworkname")
             option(value="null") None
             -for (var i = 0; i < frameworks.length; i++) {
