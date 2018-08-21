@@ -1,0 +1,36 @@
+extend layout
+block content
+  head
+  body
+    .container
+      h1 Resources
+      p
+        | This is all
+        strong  placeholder text
+        |  use it wisely
+      ul
+        li some stuff  
+        li many stuffs
+      form(name="resource-list", method="get", action="/resources/edit")
+        #table.table-editable
+          table.table
+            tbody
+              tr   
+                th Name    
+                th URL
+                th Framework Name
+                th Language Name
+                th
+                th
+              -for (let i = 0; i < resources.length; i++) {
+              tr
+                td(contenteditable='false') #{resources[i].name}
+                td(contenteditable='false') #{resources[i].url}
+                td(contenteditable='false') #{resources[i].framework.name}
+                td(contenteditable='false') #{resources[i].language.name}
+                td
+                td
+              -}
+
+        div.actions
+            input(type="submit", value="Edit").form-group

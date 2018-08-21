@@ -11,7 +11,7 @@ block content
       ul
         li some stuff  
         li many stuffs
-      form(name="create-resources", method="post")
+      form(name="edit-resources", method="post")
         #table.table-editable
           table.table
             tbody
@@ -39,10 +39,11 @@ block content
                     option(value="null", selected=select) None
                 td(contenteditable='false') 
                   select(name="languageName")
-                    option(value="null") None
-                    -for(let k = 0; k < languages.length; k++){
-                    option(value="#{languages[k].name}") #{languages[k].name}
+                    -for(let j = 0; j < languages.length; j++){
+                      -if(resources[i].language == languages[j]) select='selected';
+                      option(value="#{languages[j].name}", selected=select) #{languages[j].name}
                     -}
+                    option(value="null", selected=select) None
                 td
                   span.table-remove.glyphicon.glyphicon-remove
                 td
@@ -56,4 +57,4 @@ block content
                 td
 
         div.actions
-            input(type="submit", value="Create").form-group
+            input(type="submit", value="Save Changes").form-group
