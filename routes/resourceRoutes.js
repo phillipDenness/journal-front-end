@@ -12,7 +12,7 @@ router.use(bodyParser.json());
 
 router.get('/', function (req, res) {    
   res.render('index',
-  { title : 'Home' })
+  { title : 'Home'})
   });
 
 router.get('/resources', function (req, res) {   
@@ -20,7 +20,7 @@ router.get('/resources', function (req, res) {
       let resources = JSON.parse(json);
       service.getLanguages(function(languages) {
         service.getFrameworks(function(frameworks) {
-          res.render('resource', {resources, languages, frameworks})
+          res.render('resource', {resources, languages, frameworks},)
         })
       })
     })
