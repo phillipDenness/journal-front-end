@@ -9,7 +9,7 @@
   "dependencies": {
     "eslint": "^5.3.0",
     "express": "^4.16.3",
-    "path-to-regexp": "^2.2.1",
+    "jade": "^1.11.0",
     "request": "^2.88.0"
   },
   "devDependencies": {

@@ -1,16 +1,62 @@
 const rest = require('./rest')
 const utils = require('./utils')
 
+exports.getFrameworks = function(callback) {
+    var options = {
+        body: '',
+        path: '/frameworks'
+    };
+
+    const promise = new Promise(function(successCallback, failureCallback) {
+        rest.getJSON(options, successCallback, failureCallback);
+    });
+        
+    promise.then(function(result) {
+        console.log(result);
+        callback(JSON.parse(result));
+    }, function(err) {
+        console.log(err);
+        callback(err);
+    })
+}
+
+
+exports.getLanguages = function(callback) {
+    var options = {
+        body: '',
+        path: '/languages'
+    };
+
+    const promise = new Promise(function(successCallback, failureCallback) {
+        rest.getJSON(options, successCallback, failureCallback);
+    });
+        
+    promise.then(function(result) {
+        console.log(result);
+        callback(JSON.parse(result));
+    }, function(err) {
+        console.log(err);
+        callback(err);
+    })
+}
+
 exports.createResource = function(payload, callback) {
     let options = {
         body: utils.convertFormToResource(payload.body),
         path: '/resources'
     };
-    return rest.postJson(options, function(err, body) {
-        if(!err) {
-            callback(body);
-        }
+
+    const promise = new Promise(function(successCallback, failureCallback) {
+        rest.postJson(options, successCallback, failureCallback);
     });
+        
+    promise.then(function(result) {
+        console.log(result);
+        callback(result);
+    }, function(err) {
+        console.log(err);
+        callback(err);
+    })
 }
 
 exports.getResource = function(resId, callback) {
@@ -19,11 +65,17 @@ exports.getResource = function(resId, callback) {
         path: '/resources/' + resId
     };
 
-    return rest.getJSON(options, function(err,body){
-        if(!err){
-            callback(body);
-        }
+    const promise = new Promise(function(successCallback, failureCallback) {
+        rest.getJSON(options, successCallback, failureCallback);
     });
+        
+    promise.then(function(result) {
+        console.log(result);
+        callback(JSON.parse(result));
+    }, function(err) {
+        console.log(err);
+        callback(err);
+    })
 }
 
 exports.getResources = function(callback) {
@@ -31,10 +83,15 @@ exports.getResources = function(callback) {
         body: '',
         path: '/resources'
     };
-
-    return rest.getJSON(options, function(err, body) {
-        if(!err) {
-            callback(body);
-        }
+    const promise = new Promise(function(successCallback, failureCallback) {
+        rest.getJSON(options, successCallback, failureCallback);
     });
+        
+    promise.then(function(result) {
+        console.log(result);
+        callback(JSON.parse(result));
+    }, function(err) {
+        console.log(err);
+        callback(err);
+    })
 }

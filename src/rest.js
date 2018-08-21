@@ -3,37 +3,40 @@ const config = require('../config');
 
 const headers = {'Content-Type': 'application/json'}
 
-exports.postJson = function(options, callback) {
+exports.postJson = function(options, successCallback, failureCallback) {
     request({
       headers: headers,
       uri: buildUrl(options),
       method: 'POST',
       body: options.body
-    }, (err, res, body) => {
-      parseJsonResponse(callback, err, body);
-    });
+    }, (err, res, body) => { 
+        if (err || res.statusCode != 202) {
+          return failureCallback(res.statusCode);
+        }else{
+          return successCallback(body);
+        }
+  })
 }
 
-exports.getJSON = function(options, callback) {
+exports.getJSON = function(options, successCallback, failureCallback) {
     request({
         headers: headers,
         uri: buildUrl(options),
         method: 'GET'
       }, (err, res, body) => {
-        if(res.statusCode == 202){
-          callback(null,body);
+        if (err || res.statusCode != 202) {
+          return failureCallback(res.statusCode);
         }else{
-          callback(res.statusCode,null);
+          return successCallback(body);
         }
-        parseJsonResponse(callback, err, body);
       })
 };
 
 var parseJsonResponse = function(callback, err, body) {
-  if (err) { callback(JSON.parse(err), null); }
+  if (err != null) { callback(JSON.parse(err), null); }
   callback(null, JSON.parse(body));
 }
 
 var buildUrl = function(options) {
-  return config.api.protocol + '://' + config.api.host + ':' + config.api.port + '/' + options.path;
+  return config.api.protocol + '://' + config.api.host + ':' + config.api.port + options.path;
 }

@@ -11,27 +11,34 @@ router.use(bodyParser.urlencoded({
 router.use(bodyParser.json());
 
 router.get('/', function (req, res) {    
-    res.send('Homepage');
+  res.render('index',
+  { title : 'Home' })
   })
 
 router.get('/resources', function (req, res) {   
   if(req.query.id != null){
+    console.log("id: " + req.query.id);
     service.getResource(req.query.id, function (json) {
       res.send(json);
       });
   } else {
+    console.log("no id");
     service.getResources(function (json) {
       res.send(json);
       });
     }
   });
 
-router.get('/resources/create', function (req, res) {    
-    res.sendFile(path.join(__dirname, '../public', 'resourceform.html'));
+router.get('/resources/create', function (req, res) {
+  service.getLanguages(function(languages) {
+      service.getFrameworks(function(frameworks) {
+        res.render('resourceform', {languages, frameworks})
+      })
+    });
   })
 
-router.post('/resources/submit', function(req, res) {
-  service.createResource(req, function(message){
+router.post('/resources/create', function(req, res) {
+  service.createResource(req, function(message) {
    res.send(message);
   });
 });
