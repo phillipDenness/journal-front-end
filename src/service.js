@@ -20,7 +20,6 @@ exports.getFrameworks = function(callback) {
     })
 }
 
-
 exports.getLanguages = function(callback) {
     var options = {
         body: '',
@@ -89,7 +88,7 @@ exports.getResources = function(callback) {
         
     promise.then(function(result) {
         console.log(result);
-        callback(JSON.parse(result));
+        callback(result);
     }, function(err) {
         console.log(err);
         callback(err);

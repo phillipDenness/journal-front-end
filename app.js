@@ -7,6 +7,7 @@ app.set('port', config.app.port);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.set('view options', {layout: false});
+app.use(express.static(__dirname + '/public'));
 
 exports.init = function() {
     // Routes
