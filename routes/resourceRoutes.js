@@ -13,21 +13,18 @@ router.use(bodyParser.json());
 router.get('/', function (req, res) {    
   res.render('index',
   { title : 'Home' })
-  })
+  });
 
 router.get('/resources', function (req, res) {   
-  if(req.query.id != null){
-    console.log("id: " + req.query.id);
-    service.getResource(req.query.id, function (json) {
-      res.send(json);
-      });
-  } else {
-    console.log("no id");
     service.getResources(function (json) {
-      res.send(json);
-      });
-    }
-  });
+      let resources = JSON.parse(json);
+      service.getLanguages(function(languages) {
+        service.getFrameworks(function(frameworks) {
+          res.render('resource', {resources, languages, frameworks})
+        })
+      })
+    })
+  })
 
 router.get('/resources/create', function (req, res) {
   service.getLanguages(function(languages) {
@@ -41,6 +38,13 @@ router.post('/resources/create', function(req, res) {
   service.createResource(req, function(message) {
    res.send(message);
   });
+});
+
+router.post('/resources', function(req, res) {
+  console.log(req);
+  // service.createResource(req, function(message) {
+   res.send("Submitted");
+  // });
 });
 
 module.exports = router;

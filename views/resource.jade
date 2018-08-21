@@ -1,0 +1,59 @@
+extend layout
+block content
+  head
+  body
+    .container
+      h1 Resources
+      p
+        | This is all
+        strong  placeholder text
+        |  use it wisely
+      ul
+        li some stuff  
+        li many stuffs
+      form(name="create-resources", method="post")
+        #table.table-editable
+          table.table
+            tbody
+              tr   
+                th Name    
+                th URL
+                th Framework Name
+                th Language Name
+                th
+                  span.table-add.glyphicon.glyphicon-plus
+                th
+              -for (let i = 0; i < resources.length; i++) {
+              tr
+                td(contenteditable='false')
+                  input(type="text", name="name", value=resources[i].name) 
+                td(contenteditable='false') 
+                  input(type="text", name="url", value=resources[i].url)  
+                td(contenteditable='false') 
+                  select(name="frameworkName")
+                    -let select=null
+                    -for(let j = 0; j < frameworks.length; j++){
+                      -if(resources[i].framework == frameworks[j]) select='selected';
+                      option(value="#{frameworks[j].name}", selected=select) #{frameworks[j].name}
+                    -}
+                    option(value="null", selected=select) None
+                td(contenteditable='false') 
+                  select(name="languageName")
+                    option(value="null") None
+                    -for(let k = 0; k < languages.length; k++){
+                    option(value="#{languages[k].name}") #{languages[k].name}
+                    -}
+                td
+                  span.table-remove.glyphicon.glyphicon-remove
+                td
+              -}
+              // This is our clonable table line
+              tr.hide
+                td(contenteditable='true') Untitled
+                td(contenteditable='true') undefined
+                td
+                  span.table-remove.glyphicon.glyphicon-remove 
+                td
+
+        div.actions
+            input(class="btn btn-primary" type="submit", value="Create").form-group
