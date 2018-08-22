@@ -20,7 +20,6 @@ exports.getFrameworks = function(callback) {
     })
 }
 
-
 exports.getLanguages = function(callback) {
     var options = {
         body: '',
@@ -59,15 +58,39 @@ exports.createResource = function(payload, callback) {
     })
 }
 
-exports.getResources = function(callback) {
-    var options = {
-        body: '',
+exports.editResource = function(payload, callback) {
+    let options = {
+        body: utils.convertFormToResources(payload.body),
         path: '/resources'
     };
 
-    return rest.getJSON(options, function(err, body) {
-        if(!err) {
-            callback(body);
-        }
+    const promise = new Promise(function(successCallback, failureCallback) {
+        rest.postJson(options, successCallback, failureCallback);
     });
+        
+    promise.then(function(result) {
+        console.log(result);
+        callback(result);
+    }, function(err) {
+        console.log(err);
+        callback(err);
+    })
+}
+
+exports.getResources = function(callback) {
+    let options = {
+        body: '',
+        path: '/resources'
+    };
+    const promise = new Promise(function(successCallback, failureCallback) {
+        rest.getJSON(options, successCallback, failureCallback);
+    });
+        
+    promise.then(function(result) {
+        console.log(result);
+        callback(result);
+    }, function(err) {
+        console.log(err);
+        callback(err);
+    })
 }
