@@ -6,8 +6,7 @@ exports.convertFormToResource = function(body) {
         languageName: body.languagename,
         frameworkName: body.frameworkname
     };
-    console.log(JSON.stringify(resource));
-    return JSON.stringify(resource);
+    return resource;
 };
 
 exports.convertFormToResources = function(body) {

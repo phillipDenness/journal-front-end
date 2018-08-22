@@ -19,7 +19,7 @@
     "sinon": "^6.1.5"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --recursive"
   },
   "repository": {
     "type": "git",

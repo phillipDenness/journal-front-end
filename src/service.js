@@ -41,7 +41,7 @@ exports.getLanguages = function(callback) {
 
 exports.createResource = function(payload, callback) {
     let options = {
-        body: utils.convertFormToResource(payload.body),
+        body: JSON.stringify(utils.convertFormToResource(payload.body)),
         path: '/resources'
     };
 
