@@ -26,16 +26,16 @@ router.get('/resources', function (req, res) {
     })
   })
 
-  router.get('/resources/edit', function (req, res) {   
-    service.getResources(function (json) {
-      let resources = JSON.parse(json);
-      service.getLanguages(function(languages) {
-        service.getFrameworks(function(frameworks) {
-          res.render('editresource', {resources, languages, frameworks},)
-        })
+router.get('/resources/edit', function (req, res) {   
+  service.getResources(function (json) {
+    let resources = JSON.parse(json);
+    service.getLanguages(function(languages) {
+      service.getFrameworks(function(frameworks) {
+        res.render('editresource', {resources, languages, frameworks},)
       })
     })
   })
+})
 
 router.get('/resources/create', function (req, res) {
   service.getLanguages(function(languages) {
@@ -45,18 +45,16 @@ router.get('/resources/create', function (req, res) {
     })
   })
 
-// router.post('/resources/create', function(req, res) {
-//   service.createResource(req, function(message) {
-//    res.send(message);
-//   });
-// });
+router.post('/resources/create', function(req, res) {
+  service.createResource(req, function(message) {
+   res.send(message);
+  });
+});
 
 router.post('/resources/edit', function(req, res) {
-  console.log(req);
-   service.createResource(req, function(message) {
-   console.log(message)
-   res.redirect('/resources');
-  });
+   service.sortResource(req, function(message) {
+    res.redirect("/resources");
+   });
 });
 
 module.exports = router;

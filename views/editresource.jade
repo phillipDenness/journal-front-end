@@ -11,7 +11,7 @@ block content
       ul
         li some stuff  
         li many stuffs
-      form(name="edit-resources", method="post")
+      form(id ="edit-form", name="edit-resources", method="post", action="/resources/edit")
         #table.table-editable
           table.table
             tbody
@@ -21,16 +21,15 @@ block content
                 th Framework Name
                 th Language Name
                 th
-                  span.table-add.glyphicon.glyphicon-plus
                 th
               -for (let i = 0; i < resources.length; i++) {
               tr
                 td(contenteditable='false')
-                  input(type="text", name="name", value=resources[i].name) 
+                  input(type="text", name="resources[#{i}]", value=resources[i].name) 
                 td(contenteditable='false') 
-                  input(type="text", name="url", value=resources[i].url)  
+                  input(type="text", name="resources[#{i}]", value=resources[i].url)  
                 td(contenteditable='false') 
-                  select(name="frameworkName")
+                  select(name="resources[#{i}]")
                     -let select=null
                     -for(let j = 0; j < frameworks.length; j++){
                       -if(resources[i].framework == frameworks[j]) select='selected';
@@ -38,23 +37,17 @@ block content
                     -}
                     option(value="null", selected=select) None
                 td(contenteditable='false') 
-                  select(name="languageName")
+                  select(name="resources[#{i}]")
                     -for(let j = 0; j < languages.length; j++){
                       -if(resources[i].language == languages[j]) select='selected';
                       option(value="#{languages[j].name}", selected=select) #{languages[j].name}
                     -}
                     option(value="null", selected=select) None
                 td
-                  span.table-remove.glyphicon.glyphicon-remove
+                 span.table-remove.glyphicon.glyphicon-remove 
                 td
               -}
-              // This is our clonable table line
-              tr.hide
-                td(contenteditable='true') Untitled
-                td(contenteditable='true') undefined
-                td
-                  span.table-remove.glyphicon.glyphicon-remove 
-                td
+              
 
-        div.actions
-            input(type="submit", value="Save Changes").form-group
+       div.actions
+          input(form="edit-form", type="submit", value="Save Changes").form-group

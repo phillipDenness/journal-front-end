@@ -21,6 +21,7 @@ block content
                 th Framework Name
                 th Language Name
                 th
+                 span.table-add.glyphicon.glyphicon-plus
                 th
               -for (let i = 0; i < resources.length; i++) {
               tr
@@ -31,6 +32,12 @@ block content
                 td
                 td
               -}
+              // This is our clonable table line
+              tr.hide
+                td(contenteditable='true') Untitled
+                td(contenteditable='true') undefined
+                td
+                td
 
         div.actions
             input(type="submit", value="Edit").form-group

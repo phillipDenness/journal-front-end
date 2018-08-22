@@ -20,7 +20,23 @@ exports.postJson = function(options, successCallback, failureCallback) {
   })
 }
 
-exports.getJSON = function(options, successCallback, failureCallback) {
+exports.putJson = function(options,successCallback, failureCallback) {
+  request({
+      headers: headers,
+      uri: buildUrl(options),
+      method: 'PUT'
+    }, (err, res, body) => {
+      if(err){
+        return failureCallback(err)
+      } else if(res.statusCode != 202){
+        return failureCallback(res.statusCode)
+      } else {
+        return successCallback(body)
+      }
+  })
+}
+
+exports.getJson = function(options, successCallback, failureCallback) {
     request({
         headers: headers,
         uri: buildUrl(options),
@@ -34,7 +50,7 @@ exports.getJSON = function(options, successCallback, failureCallback) {
           return successCallback(body);
         }
     })
-  }
+}
 
 var buildUrl = function(options) {
   return config.api.protocol + '://' + config.api.host + ':' + config.api.port + options.path;
