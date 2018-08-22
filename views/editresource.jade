@@ -46,7 +46,13 @@ block content
                 td
                  span.table-remove.glyphicon.glyphicon-remove 
                 td
+              tr.hide
+                td
+                  input(type="text", name="resources[#{i}]", value=resources[i].resourceId)
+                td
+                td
               -}
+
               
 
        div.actions

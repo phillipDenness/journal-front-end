@@ -39,8 +39,9 @@ exports.getLanguages = function(callback) {
     })
 }
 
-exports.sortResource = function (payload, callback) {
-    let newResources = payload.body.resources
+exports.sortResource = function (req, callback) {
+    let newResources = req.body.resources
+    console.log(newResources)
     for(let i = 0;i < newResources.length;i++){
         updateResource(newResources[i])
     }
@@ -48,22 +49,20 @@ exports.sortResource = function (payload, callback) {
 }
 
 updateResource = function(payload) {
-    console.log(payload)
     let resource = utils.convertUpdateFormToResource(payload)
+    let id = payload[4]
 
     let options = {
         body: JSON.stringify(resource),
-        path: '/resources/' +  resource.name
+        path: '/resources/' + id
     };
-    console.log("##############")
-    console.log(options.body)
-    console.log(options.path)
 
     const promise = new Promise(function(successCallback, failureCallback) {
         rest.putJson(options, successCallback, failureCallback);
     });
         
-    promise.then(function(result) {
+    promise
+    .then(function(result) {
         console.log(result);
         callback(result);
     }, function(err) {
@@ -84,7 +83,8 @@ exports.createResource = function(payload, callback) {
         rest.postJson(options, successCallback, failureCallback);
     });
         
-    promise.then(function(result) {
+    promise
+    .then(function(result) {
         console.log(result);
         callback(result);
     }, function(err) {

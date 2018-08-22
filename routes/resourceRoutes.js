@@ -18,6 +18,7 @@ router.get('/', function (req, res) {
 router.get('/resources', function (req, res) {   
     service.getResources(function (json) {
       let resources = JSON.parse(json);
+      console.log(resources)
       service.getLanguages(function(languages) {
         service.getFrameworks(function(frameworks) {
           res.render('resourcelist', {resources, languages, frameworks},)

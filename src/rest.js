@@ -28,9 +28,9 @@ exports.putJson = function(options,successCallback, failureCallback) {
     }, (err, res, body) => {
       if(err){
         return failureCallback(err)
-      } else if(res.statusCode != 202){
+      }else if(res.statusCode != 202){
         return failureCallback(res.statusCode)
-      } else {
+      }else {
         return successCallback(body)
       }
   })
