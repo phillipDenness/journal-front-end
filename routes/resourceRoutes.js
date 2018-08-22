@@ -45,18 +45,18 @@ router.get('/resources/create', function (req, res) {
     })
   })
 
-// router.post('/resources/create', function(req, res) {
-//   service.createResource(req, function(message) {
-//    res.send(message);
-//   });
-// });
+router.post('/resources/create', function(req, res) {
+  service.createResource(req, function(message) {
+   res.send(message);
+  });
+});
 
 router.post('/resources/edit', function(req, res) {
   console.log(req);
-   service.createResource(req, function(message) {
+   service.editResource(req, function(message) {
    console.log(message)
    res.redirect('/resources');
-  });
+   });
 });
 
 module.exports = router;

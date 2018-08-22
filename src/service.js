@@ -41,12 +41,9 @@ exports.getLanguages = function(callback) {
 
 exports.createResource = function(payload, callback) {
     let options = {
-        body: utils.convertFormToResources(payload.body),
+        body: utils.convertFormToResource(payload.body),
         path: '/resources'
     };
-
-    console.log("THE BODY: #################################")
-    console.log(options.body)
 
     const promise = new Promise(function(successCallback, failureCallback) {
         rest.postJson(options, successCallback, failureCallback);
@@ -61,24 +58,24 @@ exports.createResource = function(payload, callback) {
     })
 }
 
-// exports.getResource = function(resId, callback) {
-//     let options = {
-//         body: '',
-//         path: '/resources/' + resId
-//     };
+exports.editResource = function(payload, callback) {
+    let options = {
+        body: utils.convertFormToResources(payload.body),
+        path: '/resources'
+    };
 
-//     const promise = new Promise(function(successCallback, failureCallback) {
-//         rest.getJSON(options, successCallback, failureCallback);
-//     });
+    const promise = new Promise(function(successCallback, failureCallback) {
+        rest.postJson(options, successCallback, failureCallback);
+    });
         
-//     promise.then(function(result) {
-//         console.log(result);
-//         callback(JSON.parse(result));
-//     }, function(err) {
-//         console.log(err);
-//         callback(err);
-//     })
-// }
+    promise.then(function(result) {
+        console.log(result);
+        callback(result);
+    }, function(err) {
+        console.log(err);
+        callback(err);
+    })
+}
 
 exports.getResources = function(callback) {
     let options = {
