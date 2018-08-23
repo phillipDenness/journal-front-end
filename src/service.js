@@ -8,7 +8,7 @@ exports.getFrameworks = function(callback) {
     };
 
     const promise = new Promise(function(successCallback, failureCallback) {
-        rest.getJSON(options, successCallback, failureCallback);
+        rest.getJson(options, successCallback, failureCallback);
     });
         
     promise.then(function(result) {
@@ -27,7 +27,7 @@ exports.getLanguages = function(callback) {
     };
 
     const promise = new Promise(function(successCallback, failureCallback) {
-        rest.getJSON(options, successCallback, failureCallback);
+        rest.getJson(options, successCallback, failureCallback);
     });
         
     promise.then(function(result) {
@@ -39,9 +39,40 @@ exports.getLanguages = function(callback) {
     })
 }
 
+exports.sortResource = function (req, callback) {
+    let newResources = req.body.resources
+    console.log(newResources)
+
+    for(let i = 0;i < newResources.length;i++){
+        updateResource(newResources[i])
+    }
+    callback("Done")
+}
+
+updateResource = function(payload) {
+    let resource = utils.convertUpdateFormToResource(payload)
+    let id = payload[4]
+
+    let options = {
+        body: JSON.stringify(resource),
+        path: '/resources/' + id
+    }
+
+    let promise = new Promise(function (resolve, reject) {
+        rest.putJson(options, resolve, reject);
+    })
+    .then(function(result) {
+        console.log(result)
+    }, function (err) {
+        console.log(err)
+    })
+}
+
 exports.createResource = function(payload, callback) {
+    let resource = utils.convertCreateFormToResource(payload.body)
+
     let options = {
-        body: utils.convertFormToResource(payload.body),
+        body: JSON.stringify(resource),
         path: '/resources'
     };
 
@@ -49,7 +80,8 @@ exports.createResource = function(payload, callback) {
         rest.postJson(options, successCallback, failureCallback);
     });
         
-    promise.then(function(result) {
+    promise
+    .then(function(result) {
         console.log(result);
         callback(result);
     }, function(err) {
@@ -58,24 +90,6 @@ exports.createResource = function(payload, callback) {
     })
 }
 
-exports.editResource = function(payload, callback) {
-    let options = {
-        body: utils.convertFormToResources(payload.body),
-        path: '/resources'
-    };
-
-    const promise = new Promise(function(successCallback, failureCallback) {
-        rest.postJson(options, successCallback, failureCallback);
-    });
-        
-    promise.then(function(result) {
-        console.log(result);
-        callback(result);
-    }, function(err) {
-        console.log(err);
-        callback(err);
-    })
-}
 
 exports.getResources = function(callback) {
     let options = {
@@ -83,7 +97,7 @@ exports.getResources = function(callback) {
         path: '/resources'
     };
     const promise = new Promise(function(successCallback, failureCallback) {
-        rest.getJSON(options, successCallback, failureCallback);
+        rest.getJson(options, successCallback, failureCallback);
     });
         
     promise.then(function(result) {

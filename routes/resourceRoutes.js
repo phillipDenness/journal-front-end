@@ -18,6 +18,7 @@ router.get('/', function (req, res) {
 router.get('/resources', function (req, res) {   
     service.getResources(function (json) {
       let resources = JSON.parse(json);
+      console.log(resources)
       service.getLanguages(function(languages) {
         service.getFrameworks(function(frameworks) {
           res.render('resourcelist', {resources, languages, frameworks},)
@@ -26,16 +27,16 @@ router.get('/resources', function (req, res) {
     })
   })
 
-  router.get('/resources/edit', function (req, res) {   
-    service.getResources(function (json) {
-      let resources = JSON.parse(json);
-      service.getLanguages(function(languages) {
-        service.getFrameworks(function(frameworks) {
-          res.render('editresource', {resources, languages, frameworks},)
-        })
+router.get('/resources/edit', function (req, res) {   
+  service.getResources(function (json) {
+    let resources = JSON.parse(json);
+    service.getLanguages(function(languages) {
+      service.getFrameworks(function(frameworks) {
+        res.render('editresource', {resources, languages, frameworks},)
       })
     })
   })
+})
 
 router.get('/resources/create', function (req, res) {
   service.getLanguages(function(languages) {
@@ -52,10 +53,9 @@ router.post('/resources/create', function(req, res) {
 });
 
 router.post('/resources/edit', function(req, res) {
-  console.log(req);
-   service.editResource(req, function(message) {
-   console.log(message)
-   res.redirect('/resources');
+   service.sortResource(req, function(message) {
+     console.log(message)
+     res.send("Updated");
    });
 });
 
