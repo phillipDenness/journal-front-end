@@ -55,7 +55,7 @@ router.post('/resources/create', function(req, res) {
 router.post('/resources/edit', function(req, res) {
    service.sortResource(req, function(message) {
      console.log(message)
-     res.redirect("/resources");
+     res.send("Updated");
    });
 });
 

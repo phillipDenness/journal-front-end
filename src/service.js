@@ -42,6 +42,7 @@ exports.getLanguages = function(callback) {
 exports.sortResource = function (req, callback) {
     let newResources = req.body.resources
     console.log(newResources)
+
     for(let i = 0;i < newResources.length;i++){
         updateResource(newResources[i])
     }
@@ -62,9 +63,8 @@ updateResource = function(payload) {
     })
     .then(function(result) {
         console.log(result)
-    })
-    .catch(function(err){
-        console.log(err);
+    }, function (err) {
+        console.log(err)
     })
 }
 
