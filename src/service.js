@@ -55,19 +55,16 @@ updateResource = function(payload) {
     let options = {
         body: JSON.stringify(resource),
         path: '/resources/' + id
-    };
+    }
 
-    const promise = new Promise(function(successCallback, failureCallback) {
-        rest.putJson(options, successCallback, failureCallback);
-    });
-        
-    promise
+    let promise = new Promise(function (resolve, reject) {
+        rest.putJson(options, resolve, reject);
+    })
     .then(function(result) {
-        console.log(result);
-        callback(result);
-    }, function(err) {
+        console.log(result)
+    })
+    .catch(function(err){
         console.log(err);
-        callback(err);
     })
 }
 

@@ -21,17 +21,21 @@ exports.postJson = function(options, successCallback, failureCallback) {
 }
 
 exports.putJson = function(options,successCallback, failureCallback) {
+
   request({
       headers: headers,
       uri: buildUrl(options),
-      method: 'PUT'
+      method: 'PUT',
+      body: options.body
     }, (err, res, body) => {
       if(err){
-        return failureCallback(err)
+        console.log("Error thrown")
+        failureCallback(err)
       }else if(res.statusCode != 202){
-        return failureCallback(res.statusCode)
+        console.log("Status error thrown")
+        failureCallback(res.statusCode)
       }else {
-        return successCallback(body)
+        successCallback(body)
       }
   })
 }
