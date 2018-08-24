@@ -41,7 +41,7 @@ router.get('/resources/edit', function (req, res) {
 router.get('/resources/create', function (req, res) {
   service.getLanguages(function(languages) {
       service.getFrameworks(function(frameworks) {
-        res.render('resourceform', {languages, frameworks})
+        res.render('resourceform', {languages, frameworks});
       })
     })
   })
@@ -53,10 +53,17 @@ router.post('/resources/create', function(req, res) {
 });
 
 router.post('/resources/edit', function(req, res) {
-   service.sortResource(req, function(message) {
-     console.log(message)
-     res.send("Updated");
-   });
+  let promise = new Promise(function (resolve, reject){
+    service.sortResource(req, function(message) {
+      resolve(message);
+    });
+  })
+  .then(function(result){
+    console.log(result);
+  })
+  .then(function(){
+    res.redirect("/resources");
+  })
 });
 
 module.exports = router;
