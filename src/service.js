@@ -40,18 +40,18 @@ exports.getLanguages = function(callback) {
 }
 
 exports.sortResource = function (req, callback) {
-    let newResources = req.body.resources
-    console.log(newResources)
+    let newResources = req.body.resources;
+    console.log(newResources);
 
     for(let i = 0;i < newResources.length;i++){
-        updateResource(newResources[i])
+        updateResource(newResources[i]);
     }
-    callback("Done")
+    callback("Done");
 }
 
 updateResource = function(payload) {
-    let resource = utils.convertUpdateFormToResource(payload)
-    let id = payload[4]
+    let resource = utils.convertUpdateFormToResource(payload);
+    let id = payload[4];
 
     let options = {
         body: JSON.stringify(resource),
@@ -62,7 +62,7 @@ updateResource = function(payload) {
         rest.putJson(options, resolve, reject);
     })
     .then(function(result) {
-        console.log(result)
+        console.log(result);
     }, function (err) {
         console.log(err)
     })
