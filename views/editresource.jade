@@ -11,7 +11,9 @@ block content
       ul
         li some stuff  
         li many stuffs
+
       form(id ="edit-form", name="edit-resources", method="post", action="/resources/edit")
+
         #table.table-editable
           table.table
             tbody
@@ -22,38 +24,71 @@ block content
                 th Language Name
                 th
                 th
+                
               -for (let i = 0; i < resources.length; i++) {
               tr
                 td(contenteditable='false')
                   input(type="text", name="resources[#{i}]", value=resources[i].name) 
                 td(contenteditable='false') 
                   input(type="text", name="resources[#{i}]", value=resources[i].url)  
+
+
                 td(contenteditable='false') 
+                  -let resFrameName
+                  -if(resources[i].framework == null){
+                    -resFrameName = resources[i].framework
+                  -} else {
+                    -resFrameName = resources[i].framework.name
+                  -}
+                  
                   select(name="resources[#{i}]")
-                    -let select=null
                     -for(let j = 0; j < frameworks.length; j++){
-                      -if(resources[i].framework == frameworks[j]) select='selected';
-                      option(value="#{frameworks[j].name}", selected=select) #{frameworks[j].name}
+                      -if(resFrameName == frameworks[j].name){
+                        option(value="#{frameworks[j].name}" selected) #{frameworks[j].name}
+                      -} else {
+                        option(value="#{frameworks[j].name}") #{frameworks[j].name}
+                      -}
                     -}
-                    option(value="null", selected=select) None
+                    -if(resFrameName == null) {
+                      option(value="null" selected) None
+                    -} else {
+                      option(value="null") None
+                    -}
+
+
                 td(contenteditable='false') 
+                  -let resLangName
+                  -if(resources[i].language == null){
+                    -resLangName = resources[i].language
+                  -} else {
+                    -resLangName = resources[i].language.name
+                  -}
+
                   select(name="resources[#{i}]")
                     -for(let j = 0; j < languages.length; j++){
-                      -if(resources[i].language == languages[j]) select='selected';
-                      option(value="#{languages[j].name}", selected=select) #{languages[j].name}
+                      -if(resLangName == languages[j].name){
+                        option(value="#{languages[j].name}" selected) #{languages[j].name}
+                      -} else {
+                        option(value="#{languages[j].name}") #{languages[j].name}
+                      -}
                     -}
-                    option(value="null", selected=select) None
+                    -if(resLangName == null) {
+                      option(value="null" selected) None
+                    -} else {
+                      option(value="null") None
+                    -}
+
+
                 td
                  span.table-remove.glyphicon.glyphicon-remove 
                 td
+
               tr.hide
                 td
                   input(type="text", name="resources[#{i}]", value=resources[i].resourceId)
                 td
                 td
               -}
-
-              
 
        div.actions
           input(form="edit-form", type="submit", value="Save Changes").form-group

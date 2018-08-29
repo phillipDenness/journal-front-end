@@ -27,8 +27,16 @@ block content
               tr
                 td(contenteditable='false') #{resources[i].name}
                 td(contenteditable='false') #{resources[i].url}
-                td(contenteditable='false') #{resources[i].framework.name}
-                td(contenteditable='false') #{resources[i].language.name}
+                -if(resources[i].framework == null) {
+                  td(contenteditable='false') N/A
+                -} else {
+                  td(contenteditable='false') #{resources[i].framework.name}
+                -}
+                -if(resources[i].language == null) {
+                  td(contenteditable='false') N/A
+                -} else {
+                  td(contenteditable='false') #{resources[i].language.name}
+                -}
                 td
                 td
               -}

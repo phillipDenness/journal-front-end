@@ -40,7 +40,7 @@ router.get('/resources/edit', function (req, res) {
 router.get('/resources/create', function (req, res) {
   service.getLanguages(function(languages) {
       service.getFrameworks(function(frameworks) {
-        res.render('resourceform', {languages, frameworks})
+        res.render('resourceform', {languages, frameworks});
       })
     })
   })
