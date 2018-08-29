@@ -54,6 +54,7 @@ router.post('/resources/create', function(req, res) {
 router.post('/resources/edit',function(req, res){
   let newResources = req.body.resources;
   let promises = [];
+  console.log(newResources);
 
   for(let i = 0;i < newResources.length;i++){
     promises.push(service.updateResource(newResources[i]));
@@ -64,8 +65,9 @@ router.post('/resources/edit',function(req, res){
     res.redirect('/resources');
   })
   .catch(function(failure){
-    console.log("Couldn't update: ");
-    console.log(failure);
+    console.log("Couldn't update resources");
+    console.log("Error: " + failure);
+    res.sendStatus(failure);
   })
 });
 
