@@ -20,24 +20,23 @@ exports.postJson = function(options, successCallback, failureCallback) {
   })
 }
 
-exports.putJson = function(options,successCallback, failureCallback) {
-
-  request({
+exports.putJson = function(options) {
+  return new Promise(function(resolve, reject){
+    request({
       headers: headers,
       uri: buildUrl(options),
       method: 'PUT',
       body: options.body
     }, (err, res, body) => {
       if(err){
-        console.log("Error thrown")
-        failureCallback(err)
+        reject(err);
       }else if(res.statusCode != 202){
-        console.log("Status error thrown")
-        failureCallback(res.statusCode)
+        reject(res.statusCode);
       }else {
-        successCallback(body)
+        resolve(body);
       }
-  })
+    });
+  });
 }
 
 exports.getJson = function(options, successCallback, failureCallback) {

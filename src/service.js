@@ -39,33 +39,27 @@ exports.getLanguages = function(callback) {
     })
 }
 
-exports.sortResource = function (req, callback) {
-    let newResources = req.body.resources;
-    console.log(newResources);
+exports.updateResource = function(payload) {
+    return new Promise(function(resolve,reject){
+        let resource = utils.convertUpdateFormToResource(payload);
+        let id = payload[4];
 
-    for(let i = 0;i < newResources.length;i++){
-        updateResource(newResources[i]);
-    }
-    callback("Done");
-}
+        let options = {
+            body: JSON.stringify(resource),
+            path: '/resources/' + id
+        }
 
-updateResource = function(payload) {
-    let resource = utils.convertUpdateFormToResource(payload);
-    let id = payload[4];
-
-    let options = {
-        body: JSON.stringify(resource),
-        path: '/resources/' + id
-    }
-
-    let promise = new Promise(function (resolve, reject) {
-        rest.putJson(options, resolve, reject);
-    })
-    .then(function(result) {
-        console.log(result);
-    }, function (err) {
-        console.log(err)
-    })
+        rest.putJson(options)
+        .then(function(fulfilled){
+            console.log("Update resource ID: " + id + " successful!");
+            resolve(fulfilled);
+        })
+        .catch(function(failed){
+            console.log("Update resource ID: " + id + " failed.")
+            reject(failed);
+        });
+    });
+    
 }
 
 exports.createResource = function(payload, callback) {

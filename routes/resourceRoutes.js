@@ -2,7 +2,6 @@ const service = require('../src/service.js');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-
 const bodyParser = require("body-parser");
 
 router.use(bodyParser.urlencoded({
@@ -52,18 +51,23 @@ router.post('/resources/create', function(req, res) {
   });
 });
 
-router.post('/resources/edit', function(req, res) {
-  let promise = new Promise(function (resolve, reject){
-    service.sortResource(req, function(message) {
-      resolve(message);
-    });
+router.post('/resources/edit',function(req, res){
+  let newResources = req.body.resources;
+  let promises = [];
+
+  for(let i = 0;i < newResources.length;i++){
+    promises.push(service.updateResource(newResources[i]));
+  }
+  
+  Promise.all(promises)
+  .then(() => {
+    res.redirect('/resources');
   })
-  .then(function(result){
-    console.log(result);
-  })
-  .then(function(){
-    res.redirect("/resources");
+  .catch(function(failure){
+    console.log("Couldn't update: ");
+    console.log(failure);
   })
 });
+
 
 module.exports = router;
