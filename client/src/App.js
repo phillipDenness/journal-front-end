@@ -3,7 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
-  state = {resources: []}
+  constructor(props){
+    super(props);
+    this.state = {resources: []};
+  }
 
   componentDidMount() {
     fetch('/resources')
@@ -14,7 +17,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Resource List</h1>
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Resource List</h1>
+        </header>
+        <p className="App-intro">
+          To get started, edit <code>src/App.js</code> and save to reload.
+        </p>
+
         {this.state.resources.map(resource =>
           <div key={resource.resourceId}>{resource.name}</div>
         )}
@@ -24,3 +34,4 @@ class App extends Component {
 }
 
 export default App;
+
