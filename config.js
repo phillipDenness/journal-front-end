@@ -3,7 +3,7 @@ const env = process.env.NODE_ENV; // 'dev' or 'test'
 
    const test = {
     app: {
-      port: 3000
+      port: 3001
     },
     api: {
     protocol: 'http',
@@ -14,7 +14,7 @@ const env = process.env.NODE_ENV; // 'dev' or 'test'
    
    const dev = {
     app: {
-      port: 3000
+      port: 3001
     },
     api: {
       protocol: 'http',

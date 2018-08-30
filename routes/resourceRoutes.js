@@ -20,7 +20,7 @@ router.get('/resources', function (req, res) {
       console.log(resources)
       service.getLanguages(function(languages) {
         service.getFrameworks(function(frameworks) {
-          res.render('resourcelist', {resources, languages, frameworks},)
+          res.send(resources,languages,frameworks);
         })
       })
     })
