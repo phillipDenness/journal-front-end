@@ -9,22 +9,17 @@ router.use(bodyParser.urlencoded({
 }));
 router.use(bodyParser.json());
 
-router.get('/', function (req, res) {    
-  res.render('index',
-  { title : 'Home'})
-  });
-
 router.get('/resources', function (req, res) {   
-    service.getResources(function (json) {
-      let resources = JSON.parse(json);
-      console.log(resources)
-      service.getLanguages(function(languages) {
-        service.getFrameworks(function(frameworks) {
-          res.send(resources,languages,frameworks);
-        })
+  service.getResources(function (json) {
+    let resources = JSON.parse(json);
+    console.log(resources)
+    service.getLanguages(function(languages) {
+      service.getFrameworks(function(frameworks) {
+        res.send(resources,languages,frameworks);
       })
     })
   })
+})
 
 router.get('/resources/edit', function (req, res) {   
   service.getResources(function (json) {
