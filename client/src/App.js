@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './App.css';
 import Header from './components/Header';
 import SubHeading from './components/SubHeading';
+import Navigation from './components/Navigation';
 
-class App extends Component {
+export default class App extends Component {
   constructor(props){
     super(props);
     this.state = {placeholder: []};
@@ -11,10 +11,14 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Header text="Jack's Journal App"/>
-        <SubHeading text="To get started, edit <code>src/App.js</code> and save to reload."/>
+      <div>
+        <Navigation />
+        <div class="container">
+          <Header text="Jack's Journal App"/>
+          <SubHeading text="This is a subtitle"/>
+        </div>
       </div>
+      
     );
   }
 }
@@ -29,5 +33,4 @@ class App extends Component {
 //   <div key={resource.resourceId}>{resource.name}</div>
 // )}
 
-export default App;
 
