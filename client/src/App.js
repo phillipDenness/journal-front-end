@@ -23,14 +23,4 @@ export default class App extends Component {
   }
 }
 
-// componentDidMount() {
-//   fetch('/resources')
-//     .then(res => res.json())
-//     .then(resources => this.setState({ resources }));
-// }
-
-// {this.state.resources.map(resource =>
-//   <div key={resource.resourceId}>{resource.name}</div>
-// )}
-
 
