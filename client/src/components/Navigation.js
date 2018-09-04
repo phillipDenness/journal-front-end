@@ -1,19 +1,53 @@
 import React, { Component } from 'react';
 
-export default class Navigation extends Component {
-  constructor(props){
+const NavItem = props => {  
+  const pageURI = window.location.pathname+window.location.search;
+  const liClassName = (props.path === pageURI) ? "nav-item active" : "nav-item";
+  const aClassName = props.disabled ? "nav-link disabled" : "nav-link";
+
+  return(
+    <li className={liClassName}>
+      <a href={props.path} className={aClassName}>
+        {props.name}
+        {(props.path === pageURI) ? (<span className="sr-only">(current)</span>) : ''}
+      </a>
+    </li>
+  );
+}
+
+class NavDropdown extends React.Component {
+  constructor(props) {
     super(props);
-    this.state = {placeholder: []};
+    this.state = {
+      isToggleOn: false
+    };
   }
 
-  NaviItem(props){
-    return(
-      <li className="nav-item">
-      <a href={props.path} className="nav-link">{props.name}</a>
+  showDropdown(e) {
+    e.preventDefault();
+    this.setState(prevState => ({
+      isToggleOn: !prevState.isToggleOn
+    }));
+  }
+
+  render() {
+    const classDropdownMenu = 'dropdown-menu' + (this.state.isToggleOn ? ' show' : '')
+    return (
+      <li className="nav-item dropdown">
+        <a className="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false"
+          onClick={(e) => {this.showDropdown(e)}}>
+          {this.props.name}
+        </a>
+        <div className={classDropdownMenu} aria-labelledby="navbarDropdown">
+          {this.props.children}
+        </div>
       </li>
-    );
+    )
   }
+}
 
+export default class Navigation extends Component {
   render() {
     return(
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -25,26 +59,20 @@ export default class Navigation extends Component {
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/">Link</a>
-            </li>
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-              </a>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="/">Action</a>
-                <a className="dropdown-item" href="/">Another action</a>
-                <div className="dropdown-divider"></div>
-                <a className="dropdown-item" href="/">Something else here</a>
-              </div>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link disabled" href="/">Disabled</a>
-            </li>
+            
+            <NavItem path="/" name="Home" />
+            <NavItem path="/resources" name="Resources" />
+            <NavItem path="/frameworks" name="Frameworks" />
+            <NavItem path="/languages" name="Languages" />
+
+            <NavDropdown name="Settings">
+              <a className="dropdown-item" href="/">Change Password</a>
+              <div className="dropdown-divider"></div>
+              <a className="dropdown-item" href="/">Logout</a>
+            </NavDropdown>
+                
+          
+          
           </ul>
           <form className="form-inline my-2 my-lg-0">
             <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
