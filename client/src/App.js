@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Home from './components/Home';
 
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 export default class App extends Component {
   constructor(props){
@@ -13,7 +13,7 @@ export default class App extends Component {
   render() {
     return (
       <Router>
-        <div class="container">
+        <div className="container">
           <Route exact path="/" component={Home} />
         </div>
       </Router>
