@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Header from './components/Header';
-import SubHeading from './components/SubHeading';
-import Navigation from './components/Navigation';
+
+import Home from './components/Home';
+
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 export default class App extends Component {
   constructor(props){
@@ -11,14 +12,11 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <Navigation />
+      <Router>
         <div class="container">
-          <Header text="Jack's Journal App"/>
-          <SubHeading text="This is a subtitle"/>
+          <Route exact path="/" component={Home} />
         </div>
-      </div>
-      
+      </Router>
     );
   }
 }
