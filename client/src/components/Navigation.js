@@ -15,7 +15,7 @@ const NavItem = props => {
   );
 }
 
-class NavDropdown extends React.Component {
+class NavDropdown extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,7 +44,7 @@ class NavDropdown extends React.Component {
           {this.props.children}
         </div>
       </li>
-    )
+    );
   }
 }
 

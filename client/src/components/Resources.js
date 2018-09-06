@@ -2,44 +2,7 @@ import React, { Component } from 'react';
 import Navigation from './Navigation';
 import rp from 'request-promise';
 import config from '../config';
-
-class Table extends React.Component {
-    render() {
-        return(
-            <div>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Url</th>
-                    <th scope="col">Framework</th>
-                    <th scope="col">Language</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                    </tr>
-                </tbody>
-            </table>
-            </div>   
-        );
-    }
-}
+import Table from './Table';
 
 export default class Resources extends Component {
     constructor(props){
@@ -54,7 +17,15 @@ export default class Resources extends Component {
     }
 
     buildUri(path) {
-        return config.api.protocol + '://' + config.api.host + ':' + config.api.post + '/' + path; 
+        return config.api.protocol + '://' + config.api.host + ':' + config.api.port + '/' + path; 
+    }
+
+    setNames(res){
+        for(let i=0;i<res.length;i++){
+            res[i].framework = res[i].framework.name;
+            res[i].language = res[i].language.name;
+        }
+        return res;
     }
 
     getAllResources() {
@@ -68,10 +39,11 @@ export default class Resources extends Component {
         
         rp(options)
             .then(res => {
-            console.log(res);
-            this.setState({
-                resources: res
-            });
+                this.setNames(res);
+                console.log(res);
+                this.setState({
+                    resources: res
+                });
             })
             .catch(err => {
                 console.log(err)
@@ -79,14 +51,12 @@ export default class Resources extends Component {
     }
 
     render() {
+    const resourceHeaders = ['Resource','Url','Framework','Language'];
         return(
             <div className="container">
-            <Navigation/>
-            {this.state.resources.map(r =>
-                <div key={r.resourceId}>
-                    {r.name} {r.url} {r.framework.name} {r.language.name}
-                </div>  
-            )}
+                <Navigation/>
+                <Table json={this.state.resources}
+                       columns={resourceHeaders}/>
             </div>
         );
     }
