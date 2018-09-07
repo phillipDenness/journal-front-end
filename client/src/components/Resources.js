@@ -7,20 +7,19 @@ import Table from './Table';
 export default class Resources extends Component {
     constructor(props){
         super(props);
-        this.state = {
-            resources: []
-        };
-    }
-
-    componentDidMount() {
-        this.getAllResources();
+            this.state = {
+                resources: []
+            };
+        this.buildUri = this.buildUri.bind(this);
+        this.format = this.format.bind(this);
+        this.getAllResources = this.getAllResources.bind(this);
     }
 
     buildUri(path) {
-        return config.api.protocol + '://' + config.api.host + ':' + config.api.port + '/' + path; 
+        return config.api.protocol + '://' + config.api.host + ':' + config.api.port + path; 
     }
 
-    setNames(res){
+    format(res){
         for(let i=0;i<res.length;i++){
             res[i].framework = res[i].framework.name;
             res[i].language = res[i].language.name;
@@ -39,8 +38,10 @@ export default class Resources extends Component {
         
         rp(options)
             .then(res => {
-                this.setNames(res);
-                console.log(res);
+                res = this.format(res);
+                return res;
+            })
+            .then(res => {
                 this.setState({
                     resources: res
                 });
@@ -51,12 +52,12 @@ export default class Resources extends Component {
     }
 
     render() {
-    const resourceHeaders = ['Resource','Url','Framework','Language'];
+        let headers = ['Resources','Url','Framework','Language'];
         return(
             <div className="container">
                 <Navigation/>
-                <Table json={this.state.resources}
-                       columns={resourceHeaders}/>
+                <Table data={this.state.resources}
+                       headers={headers}/>
             </div>
         );
     }

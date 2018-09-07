@@ -1,41 +1,43 @@
 import React, { Component } from 'react';
-
-const TableRows = props => {
-    let arr = [];
-    props.data.map(r => {
-            for(let i=1;i<props.colLength;i++){
-                arr.push("<tr><td>{r[Object.keys(r)[i]]}</td></tr>");
-            }
-        }
-    );
-
-    return(arr);
-}
-
-const Columns = props => {
-    const listCols = props.cols.map((c, key) =>
-        <th key={key} scope="col">{c}</th>
-    );
-
-    return(listCols);
-}
+import TableRow from './TableRow';
 
 export default class Table extends Component {
+    constructor(props){
+        super(props)
+        this.rows = this.rows.bind(this);
+    }
+    componentWillReceiveProps(nextProps){
+        if(nextProps){
+            this.rows();
+        }
+    }
+
+    rows(){
+        this.props.data.map(r => {
+            let key = r[Object.keys(r)[0]];
+            delete r[Object.keys(r)[0]];
+            this.setState({
+                data: <TableRow key={key} data={r}/>
+            });
+        });
+    }
+
     render() {
-        return(
-            <div>
-            <table className="table table-hover">
-                <thead>
-                    <tr>
-                    <Columns cols={this.props.columns}/>
-                    </tr>
-                </thead>
-                <tbody>
-                    <TableRows data={this.props.json}
-                               colLength={this.props.columns.length}/>
-                </tbody>
-            </table>
-            </div>   
-        );
+      return(
+        <table className="table">
+            <thead>
+                <tr>
+                <th scope="col">Re</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+                </tr>
+            </thead>
+            <tbody > 
+                {this.rows()}
+            </tbody> 
+        </table>
+      );   
     }
 }
+  
