@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Navigation from './Navigation';
 import rp from 'request-promise';
+import config from '../config';
+import Table from './Table';
+import Loading from './Loading';
 
 export default class Languages extends Component {
     constructor(props){
@@ -8,15 +11,21 @@ export default class Languages extends Component {
         this.state = {
             languages: []
         };
+        this.buildUri = this.buildUri.bind(this);
+        this.getAllLanguages = this.getAllLanguages.bind(this);
     }
 
     componentDidMount() {
         this.getAllLanguages();
     }
 
+    buildUri(path) {
+        return config.api.protocol + '://' + config.api.host + ':' + config.api.port + path; 
+    }
+
     getAllLanguages() {
         var options = {
-            uri: 'http://localhost:8080/languages',
+            uri: this.buildUri(this.props.location.pathname),
             headers: {
             'Content-Type': 'application/json'
             },
@@ -25,10 +34,9 @@ export default class Languages extends Component {
         
         rp(options)
             .then(lang => {
-            console.log(lang);
-            this.setState({
-                languages: lang
-            });
+                this.setState({
+                    languages: lang
+                });
             })
             .catch(err => {
                 console.log(err)
@@ -36,14 +44,11 @@ export default class Languages extends Component {
     }
 
     render() {
+        let headers = ['Name'];
         return(
             <div className="container">
             <Navigation/>
-            {this.state.languages.map(l =>
-                <div key={l.languageId}>
-                {l.name}
-                </div>  
-            )}
+            {this.state.languages.length !== 0 ? <Table data={this.state.languages} headers={headers}/>:<Loading text="Loading Languages.js . . ."/>}
             </div>
         );
     }

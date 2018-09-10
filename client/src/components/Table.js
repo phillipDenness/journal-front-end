@@ -16,7 +16,7 @@ const Headers = props => {
     let arr = [];
     let headers = props.vals;
     for(let i=0;i<headers.length;i++){
-        arr.push(<td key={headers[i]}>{headers[i]}</td>);
+        arr.push(<th key={headers[i]}>{headers[i]}</th>);
     }
     return(arr);
 }
@@ -24,7 +24,7 @@ const Headers = props => {
 export default class Table extends Component {
     render() {
         return(
-            <table className="table">
+            <table className="table table-hover">
                 <thead>
                     <tr>
                     <Headers vals={this.props.headers}/>
