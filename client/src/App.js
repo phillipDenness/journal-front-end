@@ -1,33 +1,24 @@
 import React, { Component } from 'react';
-import './App.css';
-import Header from './components/Header';
-import SubHeading from './components/SubHeading';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {placeholder: []};
-  }
+import Home from './components/Home';
+import Resources from './components/Resources';
+import Frameworks from './components/Frameworks';
+import Languages from './components/Languages';
 
+export default class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Header text="Jack's Journal App"/>
-        <SubHeading text="To get started, edit <code>src/App.js</code> and save to reload."/>
-      </div>
+      <Router>
+        <div>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/resources" component={Resources} />
+          <Route exact path="/frameworks" component={Frameworks} />
+          <Route exact path="/languages" component={Languages} />
+        </div>
+      </Router>
     );
   }
 }
 
-// componentDidMount() {
-//   fetch('/resources')
-//     .then(res => res.json())
-//     .then(resources => this.setState({ resources }));
-// }
-
-// {this.state.resources.map(resource =>
-//   <div key={resource.resourceId}>{resource.name}</div>
-// )}
-
-export default App;
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../App.css';
 
 class SubHeading extends Component {
     constructor(props){
@@ -10,7 +9,7 @@ class SubHeading extends Component {
     render(){
         return(
         <div>
-        <p className="App-intro">{this.props.text}</p>
+        <p>{this.props.text}</p>
         </div>
         );
     }

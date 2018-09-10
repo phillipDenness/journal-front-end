@@ -1,0 +1,17 @@
+html {
+  font: 20px normal Arial, sans-serif;
+  color: #626771;
+  background-color: #fff;
+}
+
+body {
+  padding: 18px;
+}
+
+header {
+  padding-top: 15px;
+}
+
+p {
+  font-size: 20px;
+}
