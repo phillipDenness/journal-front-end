@@ -3,16 +3,21 @@ import Navigation from './Navigation';
 import rp from 'request-promise';
 import config from '../config';
 import Table from './Table';
+import Loading from './Loading';
 
 export default class Resources extends Component {
     constructor(props){
         super(props);
-            this.state = {
-                resources: []
-            };
+        this.state = {
+            resources: []
+        };
         this.buildUri = this.buildUri.bind(this);
         this.format = this.format.bind(this);
         this.getAllResources = this.getAllResources.bind(this);
+    }
+
+    componentDidMount(){
+        this.getAllResources();
     }
 
     buildUri(path) {
@@ -38,8 +43,8 @@ export default class Resources extends Component {
         
         rp(options)
             .then(res => {
-                res = this.format(res);
-                return res;
+                let formattedRes = this.format(res);
+                return formattedRes;
             })
             .then(res => {
                 this.setState({
@@ -56,8 +61,7 @@ export default class Resources extends Component {
         return(
             <div className="container">
                 <Navigation/>
-                <Table data={this.state.resources}
-                       headers={headers}/>
+                {this.state.resources.length !== 0 ? <Table data={this.state.resources} headers={headers}/>:<Loading text="Loading Resource.js . . ."/>}
             </div>
         );
     }
