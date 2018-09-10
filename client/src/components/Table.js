@@ -24,8 +24,8 @@ const Headers = props => {
 export default class Table extends Component {
     render() {
         return(
-            <table className="table table-hover">
-                <thead>
+            <table className="table table-hover table-bordered table-sm">
+                <thead className="thead-dark">
                     <tr>
                     <Headers vals={this.props.headers}/>
                     </tr>
