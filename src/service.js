@@ -48,7 +48,7 @@ exports.updateResource = function(payload) {
             body: JSON.stringify(resource),
             path: '/resources/' + id
         }
-
+        
         rest.putJson(options)
         .then(function(fulfilled){
             console.log("Update resource ID: " + id + " successful!");

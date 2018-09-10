@@ -9,22 +9,17 @@ router.use(bodyParser.urlencoded({
 }));
 router.use(bodyParser.json());
 
-router.get('/', function (req, res) {    
-  res.render('index',
-  { title : 'Home'})
-  });
-
 router.get('/resources', function (req, res) {   
-    service.getResources(function (json) {
-      let resources = JSON.parse(json);
-      console.log(resources)
-      service.getLanguages(function(languages) {
-        service.getFrameworks(function(frameworks) {
-          res.render('resourcelist', {resources, languages, frameworks},)
-        })
+  service.getResources(function (json) {
+    let resources = JSON.parse(json);
+    console.log(resources)
+    service.getLanguages(function(languages) {
+      service.getFrameworks(function(frameworks) {
+        res.send(resources,languages,frameworks);
       })
     })
   })
+})
 
 router.get('/resources/edit', function (req, res) {   
   service.getResources(function (json) {
@@ -54,6 +49,7 @@ router.post('/resources/create', function(req, res) {
 router.post('/resources/edit',function(req, res){
   let newResources = req.body.resources;
   let promises = [];
+  console.log(newResources);
 
   for(let i = 0;i < newResources.length;i++){
     promises.push(service.updateResource(newResources[i]));
@@ -64,8 +60,9 @@ router.post('/resources/edit',function(req, res){
     res.redirect('/resources');
   })
   .catch(function(failure){
-    console.log("Couldn't update: ");
-    console.log(failure);
+    console.log("Couldn't update resources");
+    console.log("Error: " + failure);
+    res.sendStatus(failure);
   })
 });
 
