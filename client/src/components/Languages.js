@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { Container, Loader } from 'semantic-ui-react';
 import Navigation from './Navigation';
 import rp from 'request-promise';
 import config from '../config';
-import Table from './Table';
-import Loading from './Loading';
+import DynTable from './DynTable';
 
 export default class Languages extends Component {
     constructor(props){
@@ -11,19 +11,17 @@ export default class Languages extends Component {
         this.state = {
             languages: []
         };
-        this.buildUri = this.buildUri.bind(this);
-        this.getAllLanguages = this.getAllLanguages.bind(this);
     }
 
     componentDidMount() {
         this.getAllLanguages();
     }
 
-    buildUri(path) {
+    buildUri = (path) => {
         return config.api.protocol + '://' + config.api.host + ':' + config.api.port + path; 
     }
 
-    getAllLanguages() {
+    getAllLanguages = () => {
         var options = {
             uri: this.buildUri(this.props.location.pathname),
             headers: {
@@ -46,10 +44,12 @@ export default class Languages extends Component {
     render() {
         let headers = ['Name'];
         return(
-            <div className="container">
-            <Navigation/>
-            {this.state.languages.length !== 0 ? <Table data={this.state.languages} headers={headers}/>:<Loading text="Loading Languages.js . . ."/>}
-            </div>
+            <Container>
+                <Navigation/>
+                <Container>
+                {this.state.languages.length !== 0 ? <DynTable data={this.state.languages} headers={headers}/>:<Loader content="Loading Languages" active inline='centered' />}
+                </Container>
+            </Container>
         );
     }
 }
