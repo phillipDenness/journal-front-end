@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { Container, Loader } from 'semantic-ui-react';
 import Navigation from './Navigation';
 import rp from 'request-promise';
 import config from '../config';
-import Table from './Table';
-import Loading from './Loading';
+import DynTable from './DynTable';
 
 export default class Resources extends Component {
     constructor(props){
@@ -11,20 +11,17 @@ export default class Resources extends Component {
         this.state = {
             resources: []
         };
-        this.buildUri = this.buildUri.bind(this);
-        this.format = this.format.bind(this);
-        this.getAllResources = this.getAllResources.bind(this);
     }
 
     componentDidMount(){
         this.getAllResources();
     }
 
-    buildUri(path) {
+    buildUri = (path) => {
         return config.api.protocol + '://' + config.api.host + ':' + config.api.port + path; 
     }
 
-    format(res){
+    format = (res) => {
         for(let i=0;i<res.length;i++){
             res[i].framework = res[i].framework.name;
             res[i].language = res[i].language.name;
@@ -32,7 +29,7 @@ export default class Resources extends Component {
         return res;
     }
 
-    getAllResources() {
+    getAllResources = () => {
         var options = {
             uri: this.buildUri(this.props.location.pathname),
             headers: {
@@ -57,12 +54,15 @@ export default class Resources extends Component {
     }
 
     render() {
-        let headers = ['Resources','Url','Framework','Language'];
+        let headers = ['Name','Url','Framework','Language'];
         return(
-            <div className="container">
+            <Container>
                 <Navigation/>
-                {this.state.resources.length !== 0 ? <Table data={this.state.resources} headers={headers}/>:<Loading text="Loading Resource.js . . ."/>}
-            </div>
+                <Container>
+                    {this.state.resources.length !== 0 ? <DynTable data={this.state.resources} headers={headers}/>:<Loader content="Loading Resources" active inline='centered' />}
+                </Container>
+            </Container>
+                
         );
     }
 }

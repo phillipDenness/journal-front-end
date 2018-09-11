@@ -4,14 +4,9 @@ html {
   background-color: #fff;
 }
 
-body {
-  padding: 18px;
+.container {
+   padding-top: 15px;
 }
 
-header {
-  padding-top: 15px;
-}
 
-p {
-  font-size: 20px;
-}
+

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { Container, Loader } from 'semantic-ui-react';
 import Navigation from './Navigation';
 import rp from 'request-promise';
 import config from '../config';
-import Table from './Table';
-import Loading from './Loading';
+import DynTable from './DynTable';
 
 export default class Frameworks extends Component {
     constructor(props){
@@ -11,27 +11,24 @@ export default class Frameworks extends Component {
         this.state = {
             frameworks: []
         };
-        this.buildUri = this.buildUri.bind(this);
-        this.format = this.format.bind(this);
-        this.getAllFrameworks = this.getAllFrameworks.bind(this);
     }
 
     componentDidMount() {
         this.getAllFrameworks();
     }
 
-    buildUri(path) {
+    buildUri = (path) => {
         return config.api.protocol + '://' + config.api.host + ':' + config.api.port + path; 
     }
 
-    format(frame){
+    format = (frame) => {
         for(let i=0;i<frame.length;i++){
             frame[i].language = frame[i].language.name;
         }
         return frame;
     }
 
-    getAllFrameworks() {
+    getAllFrameworks = () => {
         var options = {
             uri: this.buildUri(this.props.location.pathname),
             headers: {
@@ -58,10 +55,12 @@ export default class Frameworks extends Component {
     render() {
         let headers = ['Name', 'Language'];
         return(
-            <div className="container">
+            <Container>
                 <Navigation/>
-                {this.state.frameworks.length !== 0 ? <Table data={this.state.frameworks} headers={headers}/>:<Loading text="Loading Frameworks.js . . ."/>}
-            </div>
+                <Container>
+                    {this.state.frameworks.length !== 0 ? <DynTable data={this.state.frameworks} headers={headers}/>:<Loader content="Loading Frameworks" active inline='centered' />}
+                </Container>
+            </Container>
         );
     }
 }
