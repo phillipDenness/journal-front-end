@@ -3,7 +3,7 @@ import { Container, Loader } from 'semantic-ui-react';
 import Navigation from './Navigation';
 import rp from 'request-promise';
 import config from '../config';
-import DynTable2 from './DynTable2';
+import DynTable from './DynTable';
 
 export default class Resources extends Component {
     constructor(props){
@@ -59,7 +59,7 @@ export default class Resources extends Component {
             <Container>
                 <Navigation/>
                 <Container>
-                    {this.state.resources.length !== 0 ? <DynTable2 data={this.state.resources} headers={headers}/>:<Loader content="Loading Resources" active inline='centered' />}
+                    {this.state.resources.length !== 0 ? <DynTable data={this.state.resources} headers={headers}/>:<Loader content="Loading Resources" active inline='centered' />}
                 </Container>
             </Container>
                 
