@@ -4,7 +4,7 @@ import { Loader, Table } from 'semantic-ui-react'
 const Cells = props => {
     let arr = [];
     let properties = Object.keys(props.data);
-    for(let i=0;i<props.cols;i++){
+    for(let i=1;i<props.cols;i++){
         arr.push(<Table.Cell key={Object.keys(properties)[i]}>{props.data[properties[i]]}</Table.Cell>);
     }
     return(arr);
